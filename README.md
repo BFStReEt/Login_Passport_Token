@@ -9,12 +9,12 @@
 
 <h1> Phiên bản laravel đang sử dụng <br><b>Laravel Framework 11.35.1<b><br></h1>
 Tạo cơ sở dữ liệu tên login_passport
-<b>Composer create-project laravel/laravel login-passport
-<b>php artisan install:api --passport
-<b>composer require laravel/passport
-<b>php artisan migrate
-<b>php artisan passport:install
+<b><br>Composer create-project laravel/laravel login-passport
+<b><br>php artisan install:api --passport
+<b><br>composer require laravel/passport
+<b><br>php artisan migrate
+<b><br>php artisan passport:install
 <h1>User.php
 <p align="center">
-    ![Mô tả hình ảnh](img/1.png)
+    ![Mô tả hình ảnh](./img/1.png)
 </p>
