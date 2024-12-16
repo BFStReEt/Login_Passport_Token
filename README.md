@@ -81,6 +81,6 @@ Tạo cơ sở dữ liệu tên login_passport<br>
 
 <h3>routes/api.php
 <p align="center">
-  <img src="img/7.png" alt="Mô tả hình ảnh" width="700">
+  <img src="img/8.png" alt="Mô tả hình ảnh" width="700">
 </p>
 

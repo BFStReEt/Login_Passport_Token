@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
+use Laravel\Passport\RefreshToken;
 
 class AuthController extends Controller
 {
@@ -46,10 +47,8 @@ class AuthController extends Controller
             "message" => "Login thành công",
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse(
-                $tokenResult->token->expires_at
-            )->toDateTimeString()
-        ]);
+            'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
+        ])->cookie('access_token', $tokenResult->accessToken, 60 * 24 * 30);
     }
 
     public function register(Request $request)
@@ -61,7 +60,14 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
         ]);
 
-        // Create user
+        // Kiểm tra nếu người dùng đã tồn tại
+        if (User::where('email', $request->email)->exists()) {
+            return response()->json([
+                'message' => 'Email này đã được sử dụng. Vui lòng chọn email khác.'
+            ]);
+        }
+
+        // Tạo người dùng mới
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -69,9 +75,22 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
-            "message" => "Tạo user thành công",
+            "message" => "Tạo tài khoản thành công",
         ]);
     }
+
+
+    public function logout(Request $request)
+    {
+        if ($token = $request->user()->token()) {
+            $token->revoke(); // Thu hồi token
+            return response()->json(['message' => 'Logout thành công']);
+            // Thu hồi refresh tokens liên quan
+            RefreshToken::where('access_token_id', $token->id)->update(['revoked' => true]);
+        }
+        return response()->json(['message' => 'Không tìm thấy token'], 400);
+    }
+
 
 
     /**
