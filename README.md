@@ -18,11 +18,27 @@ Tạo cơ sở dữ liệu tên login_passport
 <p align="center">
   <img src="img/1.png" alt="Mô tả hình ảnh" width="700">
 </p>
+
 <h3>Auth.php
 <p align="center">
   <img src="img/2.png" alt="Mô tả hình ảnh" width="700">
 </p>
 
+<h3>AuthServiceProvides.php
 <p align="center">
   <img src="img/3.png" alt="Mô tả hình ảnh" width="700">
+</p>
+
+<h3>AuthController.php
+<p align="center">
+  <img src="img/4.png" alt="Mô tả hình ảnh" width="700">
+</p>
+
+<h3>Login
+<p align="center">
+  <img src="img/5.png" alt="Mô tả hình ảnh" width="700">
+</p>
+
+<p align="center">
+  <img src="img/6.png" alt="Mô tả hình ảnh" width="700">
 </p>
