@@ -8,46 +8,53 @@
 </p>
 
 <h1> Phiên bản laravel đang sử dụng <br><b>Laravel Framework 11.35.1<b><br></h1>
+__
 Tạo cơ sở dữ liệu tên login_passport<br>
+__
 <b><br>Composer create-project laravel/laravel login-passport
+__
 <b><br>php artisan install:api --passport
+__
 <b><br>composer require laravel/passport
+__
 <b><br>php artisan migrate
+__
 <b><br>php artisan passport:install
+__
 <h3>App/Models/User.php
 <p align="center">
   <img src="img/1.png" alt="Mô tả hình ảnh" width="700">
 </p>
-
+__
 <h3>Config/auth.php
 <p align="center">
   <img src="img/2.png" alt="Mô tả hình ảnh" width="700">
 </p>
-
+__
 <h3>app/Providers/AuthServiceProvides.php
 <p align="center">
   <img src="img/3.png" alt="Mô tả hình ảnh" width="700">
 </p>
-
+__
 <h3>app/Http/Controller/AuthController.php
 <p align="center">
   <img src="img/4.png" alt="Mô tả hình ảnh" width="700">
 </p>
-
+__
 <h3>Login
 <p align="center">
   <img src="img/5.png" alt="Mô tả hình ảnh" width="700">
 </p>
-
+__
 <p align="center">
   <img src="img/6.png" alt="Mô tả hình ảnh" width="700">
 </p>
-
+__
 <h3>Register
 <p align="center">
   <img src="img/7.png" alt="Mô tả hình ảnh" width="700">
 </p>
-
+__
 <h3>routes/api.php
 <p align="center">
   <img src="img/7.png" alt="Mô tả hình ảnh" width="700">
