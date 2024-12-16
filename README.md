@@ -15,7 +15,6 @@ Tạo cơ sở dữ liệu tên login_passport<br>
 <b><br>Composer create-project laravel/laravel login-passport
 <hr style="border: 0; height: 0.5px; background: #000;">
 
-px solid #000;">
 <b><br>php artisan install:api --passport
 <hr style="border: 0; height: 0.5px; background: #000;">
 
