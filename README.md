@@ -16,5 +16,5 @@ Tạo cơ sở dữ liệu tên login_passport
 <b><br>php artisan passport:install
 <h1>User.php
 <p align="center">
-  <img src="img/1.png" alt="Mô tả hình ảnh" width="300">
+  <img src="img/1.png" alt="Mô tả hình ảnh" width="700">
 </p>
