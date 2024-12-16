@@ -14,7 +14,15 @@ Tạo cơ sở dữ liệu tên login_passport
 <b><br>composer require laravel/passport
 <b><br>php artisan migrate
 <b><br>php artisan passport:install
-<h1>User.php
+<h1>User.php<br>
 <p align="center">
   <img src="img/1.png" alt="Mô tả hình ảnh" width="700">
+</p>
+
+<p align="center">
+  <img src="img/2.png" alt="Mô tả hình ảnh" width="700">
+</p>
+
+<p align="center">
+  <img src="img/3.png" alt="Mô tả hình ảnh" width="700">
 </p>
