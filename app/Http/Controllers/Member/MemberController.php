@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Member;
 
+use app\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
 use Laravel\Passport\RefreshToken;
 
-class AuthController extends Controller
+class MemberController extends Controller
 {
     /**
      * Login user and create token
@@ -90,8 +91,6 @@ class AuthController extends Controller
         }
         return response()->json(['message' => 'Không tìm thấy token'], 400);
     }
-
-
 
     /**
      * Get the authenticated User
