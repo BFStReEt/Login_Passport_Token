@@ -1,8 +1,9 @@
 <?php
 
+
 namespace App\Http\Controllers\Member;
 
-use app\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -40,12 +41,12 @@ class MemberController extends Controller
         $token = $tokenResult->token;
 
         if ($request->remember_me)
-            $token->expires_at = Carbon::now()->addWeeks(10);
+            $token->expires_at = Carbon::now()->addWeeks(4);
 
         $token->save();
 
         return response()->json([
-            "message" => "Login thành công",
+            "message" => "Login member success",
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
@@ -54,21 +55,12 @@ class MemberController extends Controller
 
     public function register(Request $request)
     {
-        // Validate input
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
         ]);
 
-        // Kiểm tra nếu người dùng đã tồn tại
-        if (User::where('email', $request->email)->exists()) {
-            return response()->json([
-                'message' => 'Email này đã được sử dụng. Vui lòng chọn email khác.'
-            ]);
-        }
-
-        // Tạo người dùng mới
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -76,9 +68,10 @@ class MemberController extends Controller
         ]);
 
         return response()->json([
-            "message" => "Tạo tài khoản thành công",
-        ]);
+            "message" => "Create user member success",
+        ], 201);
     }
+
 
 
     public function logout(Request $request)
