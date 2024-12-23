@@ -84,5 +84,7 @@ Tạo cơ sở dữ liệu tên login_passport<br>
   <img src="img/8.png" alt="Mô tả hình ảnh" width="700">
 </p>
 
---
+Để kiểm tra cần có 2 thuộc tính này trong POSTMAN
+Content-Type: application/json
+Accept: application/json
 
