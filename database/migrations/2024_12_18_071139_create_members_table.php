@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string("address", 200)->nullable()->default('NULL');
             $table->string('full_name', 250)->nullable();
             $table->string('phone', 50)->nullable()->default('NULL');
-            $table->integer('status')->defaut(0);
-            $table->integer('m_status')->defaut(0);
+            $table->integer('status')->default(0);
+            $table->integer('m_status')->default(0);
 
             $table->timestamps();
         });

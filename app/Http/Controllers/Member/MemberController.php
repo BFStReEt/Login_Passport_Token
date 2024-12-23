@@ -69,7 +69,7 @@ class MemberController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'full_name' => $request->fullname,
+            'full_name' => $request->full_name,
             'address' => $request->address,
             'phone' => $request->phone,
             'status' => '1'

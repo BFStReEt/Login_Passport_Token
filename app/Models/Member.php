@@ -18,6 +18,7 @@ class Member extends Authenticatable
         'address',
         'full_name',
         'phone',
+        'status'
     ];
 
     protected $hidden = [
