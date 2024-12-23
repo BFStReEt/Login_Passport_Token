@@ -25,11 +25,12 @@ class MemberController extends Controller
     public function login(Request $request)
     {
         $request->validate([
+            'username' => 'required|string',
             'email' => 'required|string|email',
-            'password' => 'required|string',
-            'remember_me' => 'boolean'
+            'password' => 'required|string'
+
         ]);
-        $credentials = request(['email', 'password']);
+        $credentials = request(['username', 'email', 'password']);
 
         if (!Auth::attempt($credentials))
             return response()->json([
@@ -56,15 +57,19 @@ class MemberController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
+            'displayname' => 'required|string|max:255',
+            'phone' => 'required|int|min:10'
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'displayname' => $request->displayname,
+            'phone' => $request->phone
         ]);
 
         return response()->json([
