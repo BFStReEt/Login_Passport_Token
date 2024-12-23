@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use App\Models\User;
+use App\Models\Member;
 use Laravel\Passport\RefreshToken;
 
 class MemberController extends Controller
@@ -64,7 +64,7 @@ class MemberController extends Controller
             'phone' => 'required|int|min:10'
         ]);
 
-        $user = User::create([
+        $user = Member::create([
             'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
