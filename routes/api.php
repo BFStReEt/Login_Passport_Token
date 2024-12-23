@@ -10,7 +10,7 @@ Route::group(['prefix' => 'member'], function () {
     Route::post('register', [MemberController::class, 'register']);
 
     Route::group(['middleware' => 'auth:api'], function () {
-        Route::get('user', [MemberController::class, 'user']);
+        Route::get('member', [MemberController::class, 'member']);
         Route::post('logout', [MemberController::class, 'logout']);
     });
 });
@@ -20,7 +20,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('register', [MemberController::class, 'register']);
 
     Route::group(['middleware' => 'auth:api'], function () {
-        Route::get('user', [MemberController::class, 'user']);
+        Route::get('admin', [MemberController::class, 'admin']);
         Route::post('logout', [MemberController::class, 'logout']);
     });
 });

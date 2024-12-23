@@ -58,9 +58,10 @@ class MemberController extends Controller
     {
         $request->validate([
             'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:members',
             'password' => 'required|string|min:8',
-            'displayname' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'full_name' => 'required|string|max:255',
             'phone' => 'required|int|min:10'
         ]);
 
@@ -68,7 +69,8 @@ class MemberController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'displayname' => $request->displayname,
+            'full_name' => $request->fullname,
+            'address' => $request->address,
             'phone' => $request->phone
         ]);
 

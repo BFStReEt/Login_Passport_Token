@@ -16,6 +16,7 @@ class Member extends Authenticatable
         'email',
         'password',
         'address',
+        'full_name',
         'phone',
     ];
 

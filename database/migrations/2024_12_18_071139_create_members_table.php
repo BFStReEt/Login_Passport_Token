@@ -15,9 +15,11 @@ return new class extends Migration
             $table->increments('id')->length(11);
 
             $table->string("username", 150)->nullable()->default('');
-            $table->string("email", 200)->nullable();
+            $table->string('email', 200)->nullable()->default('NULL');
             $table->string("password", 100)->default('');
             $table->string("address", 200)->nullable()->default('NULL');
+            $table->string('full_name', 250)->nullable();
+            $table->string('phone', 50)->nullable()->default('NULL');
             $table->integer('status')->defaut(0);
             $table->integer('m_status')->defaut(0);
 
