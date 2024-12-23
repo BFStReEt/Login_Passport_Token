@@ -88,3 +88,12 @@ Tạo cơ sở dữ liệu tên login_passport<br>
 Content-Type: application/json
 Accept: application/json
 
+{
+    "username": "testuser01",
+    "email": "testuser01@example.com",
+    "password": "password123",
+    "full_name": "Test User",    
+    "address": "123 Main Street",
+    "phone": "1234567890"
+}
+Mẫu test trên postman

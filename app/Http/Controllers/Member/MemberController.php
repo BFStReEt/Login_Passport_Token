@@ -71,7 +71,8 @@ class MemberController extends Controller
             'password' => bcrypt($request->password),
             'full_name' => $request->fullname,
             'address' => $request->address,
-            'phone' => $request->phone
+            'phone' => $request->phone,
+            'status' => '1'
         ]);
 
         return response()->json([
