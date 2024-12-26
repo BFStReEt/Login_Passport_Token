@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('display_name', 250);
             $table->string('avatar', 250)->nullable()->default('NULL');
             $table->string('skin', 250)->default('blue');
+            $table->string('lastlogin', 150)->default('0');
             $table->integer('status')->length(11)->default('2');
             $table->string('phone', 50)->nullable();
             $table->timestamps();
