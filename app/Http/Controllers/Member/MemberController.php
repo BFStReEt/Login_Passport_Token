@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Member;
+use Exception;
 use Laravel\Passport\RefreshToken;
 
 class MemberController extends Controller
@@ -24,34 +25,49 @@ class MemberController extends Controller
      */
     public function login(Request $request)
     {
-        $request->validate([
-            'username' => 'required|string',
-            'email' => 'required|string|email',
-            'password' => 'required|string'
+        try {
+            $member = Member::where('username', $request->username)
+                ->first();
+            if (!$member) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'userNotExist'
+                ]);
+            }
+            $request->validate([
+                'username' => 'required|string',
+                'email' => 'required|string|email',
+                'password' => 'required|string'
 
-        ]);
-        $credentials = request(['username', 'email', 'password']);
+            ]);
+            $credentials = request(['username', 'email', 'password']);
 
-        if (!Auth::attempt($credentials))
+            if (!Auth::attempt($credentials))
+                return response()->json([
+                    'message' => 'Không xác thực'
+                ], 401);
+
+            $user = $request->user();
+            $tokenResult = $user->createToken('Mã Token');
+            $token = $tokenResult->token;
+
+            if ($request->remember_me)
+                $token->expires_at = Carbon::now()->addWeeks(4);
+
+            $token->save();
+
             return response()->json([
-                'message' => 'Không xác thực'
-            ], 401);
-
-        $user = $request->user();
-        $tokenResult = $user->createToken('Mã Token');
-        $token = $tokenResult->token;
-
-        if ($request->remember_me)
-            $token->expires_at = Carbon::now()->addWeeks(4);
-
-        $token->save();
-
-        return response()->json([
-            "message" => "Login member success",
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
-        ])->cookie('access_token', $tokenResult->accessToken, 60 * 24 * 30);
+                "message" => "Login member success",
+                'access_token' => $tokenResult->accessToken,
+                'token_type' => 'Bearer',
+                'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
+            ])->cookie('access_token', $tokenResult->accessToken, 60 * 24 * 30);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     public function register(Request $request)

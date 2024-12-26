@@ -16,11 +16,11 @@ Route::group(['prefix' => 'member'], function () {
 });
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::post('login', [MemberController::class, 'login']);
-    Route::post('register', [MemberController::class, 'register']);
+    Route::post('login', [AdminController::class, 'login']);
+    Route::post('register', [AdminController::class, 'register']);
 
     Route::group(['middleware' => 'auth:api'], function () {
-        Route::get('admin', [MemberController::class, 'admin']);
-        Route::post('logout', [MemberController::class, 'logout']);
+        Route::get('admin', [AdminController::class, 'admin']);
+        Route::post('logout', [AdminController::class, 'logout']);
     });
 });
