@@ -10,6 +10,9 @@ use Laravel\Passport\HasApiTokens;
 class Admin extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    protected $table = 'admin';
+
     protected $fillable = [
         'username',
         'password',
@@ -21,5 +24,10 @@ class Admin extends Model
         'phone',
         'created_at',
         'updated_at'
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 }

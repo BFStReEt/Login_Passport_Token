@@ -57,7 +57,7 @@ class AdminService implements AdminServiceInterface
     public function register($request)
     {
         $val = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:admins',
             'password' => 'required|string|min:8',
             'display_name' => 'required|string|max:250',
@@ -68,7 +68,7 @@ class AdminService implements AdminServiceInterface
         }
 
         $admin = Admin::create([
-            'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'display_name' => $request->display_name,
