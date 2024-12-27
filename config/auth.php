@@ -77,6 +77,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Member::class,
         ],
+        'admin' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ]
     ],
 
     /*

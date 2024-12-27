@@ -57,6 +57,27 @@ class AdminService implements AdminServiceInterface
             ]);
         }
     }
+
+    public function register($request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+            'display_name' => 'required|string|max:250',
+        ]);
+
+        $user = Admin::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'display_name' => $request->display_name,
+        ]);
+
+        return redirect()->route('admin.login.form')->with('success', 'Registration successful!');
+    }
+
+
     public function logout($request)
     {
         if ($token = $request->user()->token()) {
