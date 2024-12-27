@@ -11,15 +11,9 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-
-    public $bindings = [
-        'App\Services\Interfaces\AdminServiceInterface' => 'App\Services\AdminService',
-    ];
     public function register(): void
     {
-        foreach ($this->bindings as $key => $val) {
-            $this->app->bind($key, $val);
-        }
+        $this->app->bind(AdminServiceInterface::class, AdminService::class);
     }
 
     /**

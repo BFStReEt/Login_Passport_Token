@@ -12,21 +12,17 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminService implements AdminServiceInterface
 {
-    protected $adminService;
-    public function __construct(AdminService $adminService)
-    {
-        $this->adminService = $adminService;
-    }
-
     public function login($request)
     {
         $val = Validator::make($request->all(), [
             'username' => 'required',
             'password' => 'required'
         ]);
+
         if ($val->fails()) {
             return response()->json($val->errors(), 202);
         }
+
         $now = date('d-m-Y H:i:s');
         $stringTime = strtotime($now);
 
@@ -60,31 +56,36 @@ class AdminService implements AdminServiceInterface
 
     public function register($request)
     {
-        $request->validate([
+        $val = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:admins',
             'password' => 'required|string|min:8',
             'display_name' => 'required|string|max:250',
         ]);
 
-        $user = Admin::create([
+        if ($val->fails()) {
+            return response()->json($val->errors(), 422);
+        }
+
+        $admin = Admin::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
             'display_name' => $request->display_name,
         ]);
 
-        return redirect()->route('admin.login.form')->with('success', 'Registration successful!');
+        return response()->json(['status' => true, 'message' => 'Đăng ký thành công']);
     }
+
 
 
     public function logout($request)
     {
-        if ($token = $request->user()->token()) {
-            $token->revoke(); // Thu hồi token
-            return response()->json(['message' => 'Logout thành công']);
-            // Thu hồi refresh tokens liên quan
+        $token = $request->user()->token();
+        if ($token) {
+            $token->revoke();
             RefreshToken::where('access_token_id', $token->id)->update(['revoked' => true]);
+            return response()->json(['message' => 'Đăng xuất thành công']);
         }
         return response()->json(['message' => 'Không tìm thấy token'], 400);
     }
