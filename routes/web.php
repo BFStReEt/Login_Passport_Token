@@ -14,7 +14,10 @@ Route::prefix('admin')->group(function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 
-
+    Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+    Route::get('/logout', function () {
+        return view('admin.login');
+    })->name('admin.login.name');
 
     Route::get('/register', function () {
         return view('admin.register');

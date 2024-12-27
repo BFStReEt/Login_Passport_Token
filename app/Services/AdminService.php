@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Passport\RefreshToken;
 use App\Models\Admin;
-
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class AdminService implements AdminServiceInterface
@@ -38,7 +38,8 @@ class AdminService implements AdminServiceInterface
 
         if (Hash::check($request->password, $check->password)) {
             $success = $admin->createToken('Admin')->accessToken;
-            $admin->lastlogin = $stringTime;
+            $formattedDate = Carbon::createFromTimestamp($stringTime)->format('H:i:s d-m-Y ');
+            $admin->lastlogin = $formattedDate;
             $admin->save();
 
             Auth::login($admin);
@@ -61,7 +62,7 @@ class AdminService implements AdminServiceInterface
     {
         $val = Validator::make($request->all(), [
             'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:admins',
+            'email' => 'required|string|email|max:255|unique:admin',
             'password' => 'required|string|min:8',
             'display_name' => 'required|string|max:250',
         ]);
