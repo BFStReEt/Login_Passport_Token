@@ -41,7 +41,7 @@ class AdminService implements AdminServiceInterface
             $formattedDate = Carbon::createFromTimestamp($stringTime)->format('H:i:s d-m-Y ');
             $admin->lastlogin = $formattedDate;
             $admin->save();
-
+            session(['admin_token' => Auth::user()->id]);
             Auth::login($admin);
             return redirect()->route('admin.dashboard')->with('success', 'Đăng nhập thành công!');
 
@@ -87,9 +87,13 @@ class AdminService implements AdminServiceInterface
     {
         $token = $request->user()->token();
         if ($token) {
+
+            $request->session()->forget('admin_token');
             $token->revoke();
             RefreshToken::where('access_token_id', $token->id)->update(['revoked' => true]);
-            return response()->json(['message' => 'Đăng xuất thành công']);
+            //return response()->json(['message' => 'Đăng xuất thành công']);
+            Auth::logout();
+            return redirect()->route('login')->with('success', 'Đăng xuất thành công!');
         }
         return response()->json(['message' => 'Không tìm thấy token'], 400);
     }
