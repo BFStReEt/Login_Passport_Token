@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminService implements AdminServiceInterface
 {
+    protected $adminService;
+    public function __construct(AdminService $adminService)
+    {
+        $this->adminService = $adminService;
+    }
     public function login($request)
     {
         $val = Validator::make($request->all(), [

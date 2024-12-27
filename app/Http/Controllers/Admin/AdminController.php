@@ -9,48 +9,25 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
 use Laravel\Passport\RefreshToken;
+use App\Services\Interfaces\AdminServiceInterface as AdminService;
+use Exception;
 
 class AdminController extends Controller
 {
-    /**
-     * Login user and create token
-     *
-     * @param  [string] email
-     * @param  [string] password
-     * @param  [boolean] remember_me
-     * @return [string] access_token
-     * @return [string] token_type
-     * @return [string] expires_at
-     */
+    protected $adminService;
+
+    public function __construct(AdminService $adminService)
+    {
+        $this->adminService = $adminService;
+    }
+
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-            'remember_me' => 'boolean'
-        ]);
-        $credentials = request(['email', 'password']);
-
-        if (!Auth::attempt($credentials))
-            return response()->json([
-                'message' => 'Không xác thực'
-            ], 401);
-
-        $user = $request->user();
-        $tokenResult = $user->createToken('Mã Token');
-        $token = $tokenResult->token;
-
-        if ($request->remember_me)
-            $token->expires_at = Carbon::now()->addWeeks(10);
-
-        $token->save();
-
-        return response()->json([
-            "message" => "Login admin success",
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
-        ])->cookie('access_token', $tokenResult->accessToken, 60 * 24 * 30);
+        try {
+            $login = $this->adminService->login($request);
+            return $login;
+        } catch (Exception $e) {
+        }
     }
 
     public function register(Request $request)
