@@ -1,7 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminController;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('admin')->group(function () {
+    Route::get('/login', function () {
+        return view('admin.login');
+    })->name('admin.login.form');
+
+    Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
+
+    Route::get('/register', function () {
+        return view('admin.register');
+    })->name('admin.register.form');
+
+    Route::post('/register', [AdminController::class, 'register'])->name('admin.register');
 });

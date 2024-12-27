@@ -27,6 +27,10 @@ class AdminController extends Controller
             $login = $this->adminService->login($request);
             return $login;
         } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'mess' => $e->getMessage()
+            ], 422);
         }
     }
 
@@ -36,20 +40,18 @@ class AdminController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
+            'display_name' => 'required|string|max:250',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'display_name' => $request->display_name,
         ]);
 
-        return response()->json([
-            "message" => "Create user admin success",
-        ], 201);
+        return redirect()->route('admin.login.form')->with('success', 'Registration successful!');
     }
-
-
 
     public function logout(Request $request)
     {
