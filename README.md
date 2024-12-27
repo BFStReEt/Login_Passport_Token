@@ -96,4 +96,5 @@ Accept: application/json
     "address": "123 Main Street",
     "phone": "1234567890"
 }
+php .\artisan optimize:clear
 Mẫu test trên postman
