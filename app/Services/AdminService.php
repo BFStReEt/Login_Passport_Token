@@ -41,11 +41,14 @@ class AdminService implements AdminServiceInterface
             $admin->lastlogin = $stringTime;
             $admin->save();
 
-            return response()->json([
-                'status' => true,
-                'token' => $success,
-                'username' => $admin->display_name
-            ]);
+            Auth::login($admin);
+            return redirect()->route('admin.dashboard')->with('success', 'Đăng nhập thành công!');
+
+            // return response()->json([
+            //     'status' => true,
+            //     'token' => $success,
+            //     'username' => $admin->display_name
+            // ]);
         } else {
             return response()->json([
                 'status' => false,

@@ -10,6 +10,12 @@ Route::prefix('admin')->group(function () {
 
     Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
 
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+
+
+
     Route::get('/register', function () {
         return view('admin.register');
     })->name('admin.register.form');
