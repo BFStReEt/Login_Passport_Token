@@ -31,4 +31,19 @@ class Admin extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'admin_role');
+    }
+
+    public function hasPermission($permission)
+    {
+        foreach ($this->roles as $role) {
+            if ($role->permissions->where('slug', $permission)->count() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

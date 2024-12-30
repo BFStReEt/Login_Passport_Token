@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminMiddleware
 {
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next): Response
     {
-        $user = Auth::guard('admin')->user();
-        if (!$user || !$user->hasPermission($permission)) {
-            abort(403, 'Bạn không có quyền truy cập.');
+        if (!Auth::check()) {
+            return redirect()->route('admin-login')->with('error', 'Bạn cần đăng nhập để truy cập.');
         }
+        return $next($request);
     }
 }
