@@ -97,6 +97,8 @@ Accept: application/json
     "phone": "1234567890"
 }
 php .\artisan optimize:clear
+
+
 composer require laravel/breeze --dev
 npm install
 npm run dev
