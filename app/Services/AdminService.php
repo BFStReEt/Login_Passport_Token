@@ -40,11 +40,15 @@ class AdminService implements AdminServiceInterface
         if (Hash::check($request->password, $check->password)) {
             $success = $admin->createToken('Admin')->accessToken;
 
+            if (!$success) {
+                return response()->json(['status' => false, 'mess' => 'Không thể tạo token'], 500);
+            }
+
             $formattedDate = Carbon::createFromTimestamp($stringTime)->format('H:i:s d-m-Y ');
             $admin->lastlogin = $formattedDate;
             $admin->save();
             // session(['admin_token' => Auth::user()->id]);
-            // Auth::login($admin);
+            Auth::login($admin);
 
             return redirect()->route('admin-dashboard')->with('success', 'Đăng nhập thành công!');
 
@@ -86,12 +90,11 @@ class AdminService implements AdminServiceInterface
 
     public function logout($request)
     {
-        if ($token = $request->user()->token()) {
-            $token->revoke(); // Thu hồi token
-            // Thu hồi refresh tokens liên quan
-            RefreshToken::where('access_token_id', $token->id)->update(['revoked' => true]);
-            return redirect()->route('admin-login.form')->with('success', 'Đăng xuất thành công!');
-        }
-        return response()->json(['message' => 'Không tìm thấy token'], 400);
+        Auth::logout();
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect()->route('admin-login');
     }
 }

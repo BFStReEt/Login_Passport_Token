@@ -11,7 +11,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/login', function () {
         return view('admin.login');
     })->name('admin-login.form');
-    Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
+    Route::post('/login', [AdminController::class, 'login'])->name('admin-login');
 
     Route::middleware(['admin'])->group(function () {
         // Trang dashboard
