@@ -13,15 +13,15 @@ Route::prefix('admin')->group(function () {
     })->name('admin-login.form');
     Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
 
-    //Route::middleware(['admin'])->group(function () {
-    // Trang dashboard
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    })->name('admin-dashboard')->middleware(AdminMiddleware::class);
+    Route::middleware(['admin'])->group(function () {
+        // Trang dashboard
+        Route::get('/', function () {
+            return view('admin.dashboard');
+        })->name('admin-dashboard');
 
-    // Đăng xuất
-    Route::post('/logout', [AdminController::class, 'logout'])->name('admin-logout')->middleware(AdminMiddleware::class);
-    //});
+        // Đăng xuất
+        Route::post('/logout', [AdminController::class, 'logout'])->name('admin-logout');
+    });
 
     // Trang đăng ký
     Route::get('/register', function () {
