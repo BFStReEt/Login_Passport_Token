@@ -12,9 +12,8 @@ class AdminMiddleware
     public function handle($request, Closure $next): Response
     {
         if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Bạn cần đăng nhập để truy cập.');
+            return redirect()->route('admin-login')->with('error', 'Bạn cần đăng nhập để truy cập.');
         }
-
         return $next($request);
     }
 }

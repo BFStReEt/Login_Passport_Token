@@ -11,7 +11,7 @@
 <body>
     <div class="register-container">
         <h1>Admin Register</h1>
-        <form action="{{ route('admin.register') }}" method="POST">
+        <form action="{{ route('admin-register') }}" method="POST">
             @csrf
             <div>
                 <label for="username">Username</label>

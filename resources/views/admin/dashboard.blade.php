@@ -10,7 +10,7 @@
 <body>
     <h1>Welcome to Admin Dashboard!</h1>
     <p>Chúc mừng bạn đã đăng nhập thành công.</p>
-    <form action="{{ route('admin.logout') }}" method="POST">
+    <form action="{{ route('admin-logout') }}" method="POST">
         @csrf
         <button type="submit">Logoutssss</button>
     </form>

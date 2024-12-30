@@ -10,6 +10,7 @@ use App\Models\Admin;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
+
 class AdminService implements AdminServiceInterface
 {
     public function login($request)
@@ -38,12 +39,14 @@ class AdminService implements AdminServiceInterface
 
         if (Hash::check($request->password, $check->password)) {
             $success = $admin->createToken('Admin')->accessToken;
+
             $formattedDate = Carbon::createFromTimestamp($stringTime)->format('H:i:s d-m-Y ');
             $admin->lastlogin = $formattedDate;
             $admin->save();
-            session(['admin_token' => Auth::user()->id]);
-            Auth::login($admin);
-            return redirect()->route('admin.dashboard')->with('success', 'Đăng nhập thành công!');
+            // session(['admin_token' => Auth::user()->id]);
+            // Auth::login($admin);
+
+            return redirect()->route('admin-dashboard')->with('success', 'Đăng nhập thành công!');
 
             // return response()->json([
             //     'status' => true,
@@ -81,19 +84,13 @@ class AdminService implements AdminServiceInterface
         return response()->json(['status' => true, 'message' => 'Đăng ký thành công']);
     }
 
-
-
     public function logout($request)
     {
-        $token = $request->user()->token();
-        if ($token) {
-
-            $request->session()->forget('admin_token');
-            $token->revoke();
+        if ($token = $request->user()->token()) {
+            $token->revoke(); // Thu hồi token
+            // Thu hồi refresh tokens liên quan
             RefreshToken::where('access_token_id', $token->id)->update(['revoked' => true]);
-            //return response()->json(['message' => 'Đăng xuất thành công']);
-            Auth::logout();
-            return redirect()->route('login')->with('success', 'Đăng xuất thành công!');
+            return redirect()->route('admin-login.form')->with('success', 'Đăng xuất thành công!');
         }
         return response()->json(['message' => 'Không tìm thấy token'], 400);
     }
