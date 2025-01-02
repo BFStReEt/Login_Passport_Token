@@ -11,4 +11,8 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         //'permission' => \App\Http\Middleware\CheckPermission::class,
     ];
+
+    protected $middleware = [
+        \Illuminate\Http\Middleware\HandleCors::class,
+    ];
 }

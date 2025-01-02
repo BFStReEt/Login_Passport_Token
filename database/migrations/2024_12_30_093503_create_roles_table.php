@@ -4,22 +4,27 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRolesTable extends Migration
+return new class extends Migration
 {
-    public function up()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable(); // Tên hiển thị
-            $table->string('name')->nullable();   // Tên hệ thống
-            $table->string('slug')->nullable();   // Định danh duy nhất
-            $table->text('description');
+            $table->string('name');
+            $table->string('slug');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::dropIfExists('roles');
     }
-}
+};
