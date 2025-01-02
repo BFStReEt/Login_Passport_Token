@@ -20,7 +20,7 @@ Route::group(['prefix' => 'member'], function () {
 
 //ADMIN
 Route::group(['prefix' => 'admin'], function () {
-    Route::post('login', [AdminController::class, 'login'])->name('admin-login');
+    Route::post('/login', [AdminController::class, 'login'])->name('admin-login');
     Route::post('/register', [AdminController::class, 'register'])->name('admin-register');
 
     Route::group(['middleware' => 'auth:api'], function () {
@@ -32,3 +32,6 @@ Route::group(['prefix' => 'admin'], function () {
 //API
 Route::post('/upload', [UploadController::class, 'store']);
 Route::post('/submit-form', [FormController::class, 'store']);
+
+Route::post('/upload-file', [UploadController::class, 'uploadFile']);
+Route::get('/download-file/{fileName}', [UploadController::class, 'downloadFile']);

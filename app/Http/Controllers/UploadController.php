@@ -23,4 +23,32 @@ class UploadController extends Controller
             'image_path' => $path ?? null,
         ], 201);
     }
+    public function uploadFile(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/uploads', $fileName);
+
+            return response()->json([
+                'message' => 'true',
+                'file' => $fileName,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'false',
+            ], 400);
+        }
+    }
+
+    public function dowloadFile($fileName)
+    {
+        if (Storage::exists('public/uploads' . $fileName)) {
+            return response()->download(storage_path('app/public/uploads' . $fileName));
+        } else {
+            return response()->json([
+                'message' => 'false'
+            ], 404);
+        }
+    }
 }
