@@ -23,10 +23,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/login', [AdminController::class, 'login'])->name('admin-login');
     Route::post('/register', [AdminController::class, 'register'])->name('admin-register');
 
-    Route::group(['middleware' => 'auth:api'], function () {
-        Route::get('admin', [AdminController::class, 'admin']);
-        Route::post('/logout', [AdminController::class, 'logout'])->name('admin-logout');
-    });
+    //Route::group(['middleware' => 'admin'], function () {
+    Route::get('admin', [AdminController::class, 'admin']);
+    Route::post('/logout', [AdminController::class, 'logout'])->name('admin-logout');
+    //});
 });
 
 //API

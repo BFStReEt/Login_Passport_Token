@@ -43,11 +43,11 @@ class AdminService implements AdminServiceInterface
             if (!$success) {
                 return response()->json(['status' => false, 'mess' => 'Không thể tạo token'], 500);
             }
-
             $formattedDate = Carbon::createFromTimestamp($stringTime)->format('H:i:s d-m-Y ');
             $admin->lastlogin = $formattedDate;
             $admin->save();
             // session(['admin_token' => Auth::user()->id]);
+            // Auth::login($admin);
             Auth::login($admin);
 
             return redirect()->route('admin-dashboard')->with('success', 'Đăng nhập thành công!');
@@ -64,6 +64,50 @@ class AdminService implements AdminServiceInterface
             ]);
         }
     }
+    // public function login($request)
+    // {
+    //     $val = Validator::make($request->all(), [
+    //         'username' => 'required',
+    //         'password' => 'required'
+    //     ]);
+
+    //     if ($val->fails()) {
+    //         return response()->json($val->errors(), 422);
+    //     }
+
+    //     $admin = Admin::where('username', $request->username)->first();
+
+    //     if (!$admin) {
+    //         return response()->json([
+    //             'status' => false,
+    //             'mess' => 'Tên đăng nhập không tồn tại'
+    //         ], 404);
+    //     }
+
+    //     if (!Hash::check($request->password, $admin->password)) {
+    //         return response()->json([
+    //             'status' => false,
+    //             'mess' => 'Sai mật khẩu'
+    //         ], 401);
+    //     }
+
+    //     $token = $admin->createToken('user')->accessToken;
+
+    //     if (!$token) {
+    //         return response()->json(['status' => false, 'mess' => 'Không thể tạo token'], 500);
+    //     }
+
+    //     $admin->lastlogin = Carbon::now()->format('H:i:s d-m-Y');
+    //     $admin->save();
+
+    //     Admin::login($admin);
+
+    //     return response()->json([
+    //         'status' => true,
+    //         'token' => $token,
+    //         'username' => $admin->display_name
+    //     ]);
+    // }
 
     public function register($request)
     {

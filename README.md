@@ -18,14 +18,11 @@ Tạo cơ sở dữ liệu tên login_passport<br>
 <b><br>php artisan install:api --passport
 <hr style="border: 0; height: 0.5px; background: #000;">
 
-
 <b><br>composer require laravel/passport
 <hr style="border: 0; height: 0.5px; background: #000;">
 
-
 <b><br>php artisan migrate
 <hr style="border: 0; height: 0.5px; background: #000;">
-
 
 <b><br>php artisan passport:install
 <hr style="border: 0; height: 0.5px; background: #000;">

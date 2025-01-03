@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+
 
 class UploadController extends Controller
 {
@@ -23,31 +25,36 @@ class UploadController extends Controller
             'image_path' => $path ?? null,
         ], 201);
     }
+
     public function uploadFile(Request $request)
     {
         if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/uploads', $fileName);
+            $request->validate([
+                'file' => 'required|max:2048',
+            ]);
+            $fileName = time() . '.' . $request->file->extension();
 
+            $request->file->move(public_path('storage/uploads'), $fileName);
             return response()->json([
                 'message' => 'true',
-                'file' => $fileName,
+                'file' => $fileName
             ]);
         } else {
             return response()->json([
-                'message' => 'false',
+                'message' => 'false'
             ], 400);
         }
     }
 
-    public function dowloadFile($fileName)
+    public function downloadFile($fileName)
     {
-        if (Storage::exists('public/uploads' . $fileName)) {
-            return response()->download(storage_path('app/public/uploads' . $fileName));
+        $filePath = public_path('storage/uploads/' . $fileName);
+        //dd($fileName);
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
         } else {
             return response()->json([
-                'message' => 'false'
+                'message' => 'File not found.'
             ], 404);
         }
     }
